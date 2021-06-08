@@ -13,11 +13,22 @@ function DadosUsuario({ aoEnviar, validacoes }) {
     setErros(novoEstado);
   };
 
+  const possoEnviar = () => {
+    for (let campo in erros) {
+      if (!erros[campo].valido) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({ email, senha });
+        if (possoEnviar()) {
+          aoEnviar({ email, senha });
+        }
       }}
     >
       <TextField
@@ -48,7 +59,7 @@ function DadosUsuario({ aoEnviar, validacoes }) {
         fullWidth
       />
       <Button type="submit" variant="contained" color="primary">
-        Cadastrar
+        Próximo
       </Button>
     </form>
   );
